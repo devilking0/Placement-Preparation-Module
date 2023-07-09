@@ -1,0 +1,57 @@
+Brute force:
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head==NULL || head->next==NULL) return head;
+        int length=0;
+        ListNode* temp=head;
+        while(temp)
+        {
+            length++;
+            temp=temp->next;
+        }
+        int rotate = k%length;
+        temp=head;
+
+        for(int i=0; i<rotate; i++)
+        {
+            temp=head;
+            while(temp->next->next!=NULL)
+            {
+                temp=temp->next;
+            }
+            ListNode* end = temp->next;
+            temp->next=NULL;
+            end->next=head;
+            head=end;
+
+        }
+        return head;
+    }
+};
+
+Optimal solution:
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head==NULL || head->next==NULL) return head;
+        int length=1;
+        ListNode* temp=head;
+        while(temp->next)
+        {
+            length++;
+            temp=temp->next;
+        }
+        temp->next=head;
+        k = k%length;
+        k = length-k;
+        while(k--)
+        {
+            temp=temp->next;
+        }
+        head=temp->next;
+        temp->next=NULL;
+
+        return head;
+    }
+};
